@@ -30,7 +30,8 @@
     .follow-panel{position:relative;width:min(100%,470px);max-height:calc(100svh - 36px);overflow:auto;padding:30px clamp(22px,5vw,38px) 34px;border:3px solid var(--green);border-radius:20px;background:#fff9dd;box-shadow:9px 9px 0 var(--pink);text-align:left;animation:panel-in .25s ease-out}
     .follow-panel::before{content:"";display:block;width:70px;height:8px;margin-bottom:24px;border-radius:9px;background:repeating-linear-gradient(90deg,var(--pink) 0 14px,var(--yellow) 14px 20px,var(--green) 20px 34px)}
     .follow-eyebrow{margin:0 0 10px;color:var(--green);font-size:12px;font-weight:900;letter-spacing:.2em;text-transform:uppercase}
-    .follow-panel h2{margin:0;color:var(--pink);font-family:Arial Black,Arial,sans-serif;font-size:clamp(36px,8vw,56px);line-height:.95;letter-spacing:-.06em;text-transform:uppercase;text-shadow:3px 3px 0 var(--green)}
+    .follow-panel h2{display:block;position:relative;z-index:1;margin:0;color:var(--pink);font-family:Arial Black,Arial,Helvetica,sans-serif;font-size:clamp(34px,8vw,56px);font-weight:900;line-height:.98;letter-spacing:-.055em;text-transform:uppercase;text-shadow:3px 3px 0 var(--green);visibility:visible;opacity:1}
+    @media(max-width:480px){.follow-panel{padding:22px 20px 24px}.follow-panel::before{margin-bottom:16px}.follow-panel h2{font-size:clamp(32px,9vw,42px);line-height:1}.follow-copy{margin:12px 0 18px}.follow-link{padding:12px}}
     .follow-copy{margin:18px 0 24px;font-size:15px;line-height:1.45}
     .follow-close{position:absolute;top:18px;right:18px;display:grid;place-items:center;width:36px;height:36px;border:2px solid var(--green);border-radius:50%;background:var(--yellow);color:var(--green);font-size:24px;font-weight:700;cursor:pointer}
     .follow-close:hover,.follow-close:focus-visible{background:var(--pink);color:#fff;outline:2px solid var(--green);outline-offset:2px}
