@@ -21,8 +21,18 @@
     .kicker{color:var(--green);font-weight:900;text-transform:uppercase;letter-spacing:.22em;font-size:12px;margin:0 0 16px}
     h1{font-family:Arial Black,Arial,Helvetica,sans-serif;color:var(--pink);font-size:clamp(54px,10vw,134px);line-height:.88;letter-spacing:-.09em;text-transform:uppercase;margin:0;text-shadow:5px 6px 0 var(--green);max-width:1000px}
     h1 span{display:block}.intro{font-size:clamp(16px,2vw,20px);line-height:1.5;margin:30px auto 24px;max-width:470px;font-weight:600}
-    .cta{display:inline-flex;gap:11px;align-items:center;background:var(--green);color:#fff8d4;text-decoration:none;padding:15px 23px;border-radius:100px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:900;transition:transform .2s,box-shadow .2s;box-shadow:5px 5px 0 var(--pink)}
+    .cta{border:0;cursor:pointer;display:inline-flex;gap:11px;align-items:center;background:var(--green);color:#fff8d4;text-decoration:none;padding:15px 23px;border-radius:100px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:900;transition:transform .2s,box-shadow .2s;box-shadow:5px 5px 0 var(--pink)}
     .cta:hover,.cta:focus-visible{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--pink)}
+    .follow-backdrop{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:18px;background:#192916bd;backdrop-filter:blur(5px)}
+    .follow-panel{position:relative;width:min(100%,470px);max-height:calc(100svh - 36px);overflow:auto;padding:30px clamp(22px,5vw,38px) 34px;border:3px solid var(--green);border-radius:20px;background:#fff9dd;box-shadow:9px 9px 0 var(--pink);text-align:left;animation:panel-in .25s ease-out}
+    .follow-panel::before{content:"";display:block;width:70px;height:8px;margin-bottom:24px;border-radius:9px;background:repeating-linear-gradient(90deg,var(--pink) 0 14px,var(--yellow) 14px 20px,var(--green) 20px 34px)}
+    .follow-eyebrow{margin:0 0 10px;color:var(--green);font-size:12px;font-weight:900;letter-spacing:.2em;text-transform:uppercase}
+    .follow-panel h2{margin:0;color:var(--pink);font-family:Arial Black,Arial,sans-serif;font-size:clamp(36px,8vw,56px);line-height:.95;letter-spacing:-.06em;text-transform:uppercase;text-shadow:3px 3px 0 var(--green)}
+    .follow-copy{margin:18px 0 24px;font-size:15px;line-height:1.45}
+    .follow-close{position:absolute;top:18px;right:18px;display:grid;place-items:center;width:36px;height:36px;border:2px solid var(--green);border-radius:50%;background:var(--yellow);color:var(--green);font-size:24px;font-weight:700;cursor:pointer}
+    .follow-close:hover,.follow-close:focus-visible{background:var(--pink);color:#fff;outline:2px solid var(--green);outline-offset:2px}
+    .follow-links{display:grid;gap:12px}.follow-link{display:flex;align-items:center;gap:14px;padding:16px;border:2px solid var(--green);border-radius:14px;background:#fff;text-decoration:none;box-shadow:4px 4px 0 var(--green);transition:transform .2s,box-shadow .2s}.follow-link:nth-child(2){background:#fce9f3}.follow-link:hover,.follow-link:focus-visible{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--green);outline:2px solid var(--pink);outline-offset:3px}.follow-icon{display:grid;place-items:center;flex:none;width:42px;height:42px;border-radius:50%;background:var(--green);color:#fff;font-size:22px;font-weight:900}.follow-link:nth-child(2) .follow-icon{background:var(--pink)}.follow-label{display:block;font-size:16px;font-weight:900;text-transform:uppercase}.follow-handle{display:block;margin-top:2px;font-size:12px;font-weight:600}.follow-arrow{margin-left:auto;font-size:22px;font-weight:900}
+    @keyframes panel-in{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
     .footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px clamp(20px,5vw,70px);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-top:2px solid var(--green)}
     .ticker{background:var(--pink);color:#fff8d4;overflow:hidden;white-space:nowrap;border-top:2px solid var(--green);border-bottom:2px solid var(--green)}.ticker-track{display:flex;width:max-content;animation:marquee 25s linear infinite}.ticker span{display:inline-block;padding:10px 22px;font-size:12px;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
     .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}.entered .reveal{opacity:1;transform:translateY(0)}.entered .reveal:nth-child(2){transition-delay:.14s}.entered .reveal:nth-child(3){transition-delay:.25s}.entered .reveal:nth-child(4){transition-delay:.36s}
@@ -43,6 +53,9 @@
       const h=React.createElement;
       function App(){
         const [entered,setEntered]=React.useState(false);
+        const [followOpen,setFollowOpen]=React.useState(false);
+        const closeRef=React.useRef(null);
+        React.useEffect(()=>{if(!followOpen)return;const onKey=e=>{if(e.key==='Escape')setFollowOpen(false)};document.addEventListener('keydown',onKey);const previous=document.activeElement;closeRef.current?.focus();return()=>{document.removeEventListener('keydown',onKey);previous?.focus()}},[followOpen]);
         React.useEffect(()=>{const id=requestAnimationFrame(()=>setEntered(true));return()=>cancelAnimationFrame(id)},[]);
         const social=(name,url)=>h('a',{href:url,target:'_blank',rel:'noopener noreferrer',key:name},name);
         return h('div',{className:'shell'+(entered?' entered':'')},
@@ -52,9 +65,18 @@
             h('p',{className:'kicker reveal'},'A little something is on its way'),
             h('h1',{className:'reveal'},h('span',null,'Opening'),h('span',null,'soon!')),
             h('p',{className:'intro reveal'},'Pico is getting ready to bring the flavour to you. Follow along for our online launch and event updates.'),
-            h('a',{className:'cta',href:'https://www.instagram.com/pico.dhaka/',target:'_blank',rel:'noopener noreferrer'},'Follow the launch ',h('span',{'aria-hidden':true},'↗'))),
+            h('button',{className:'cta',type:'button',onClick:()=>setFollowOpen(true),'aria-haspopup':'dialog'},'Follow the launch ',h('span',{'aria-hidden':true},'↗'))),
           h('div',{className:'ticker','aria-hidden':true},h('div',{className:'ticker-track'},['Pico is coming ✳','Online soon ✳','See you at events ✳','Pico is coming ✳','Online soon ✳','See you at events ✳'].map((s,i)=>h('span',{key:i},s)))),
-          h('footer',{className:'footer'},h('span',null,'Made with a little extra colour'),h('span',null,'© Pico')));
+          h('footer',{className:'footer'},h('span',null,'Made with a little extra colour'),h('span',null,'© Pico')),
+          followOpen&&h('div',{className:'follow-backdrop',onMouseDown:e=>{if(e.target===e.currentTarget)setFollowOpen(false)}},
+            h('section',{className:'follow-panel',role:'dialog','aria-modal':'true','aria-labelledby':'follow-title'},
+              h('button',{className:'follow-close',type:'button',ref:closeRef,onClick:()=>setFollowOpen(false),'aria-label':'Close follow panel'},'×'),
+              h('p',{className:'follow-eyebrow'},'Pico is almost here'),
+              h('h2',{id:'follow-title'},'Join the fiesta!'),
+              h('p',{className:'follow-copy'},'Follow our launch online and catch us at events.'),
+              h('div',{className:'follow-links'},
+                h('a',{className:'follow-link',href:'https://www.instagram.com/pico.dhaka/',target:'_blank',rel:'noopener noreferrer'},h('span',{className:'follow-icon','aria-hidden':true},'◎'),h('span',null,h('span',{className:'follow-label'},'Instagram'),h('span',{className:'follow-handle'},'@pico.dhaka')),h('span',{className:'follow-arrow','aria-hidden':true},'↗')),
+                h('a',{className:'follow-link',href:'https://www.facebook.com/pico.dhaka/',target:'_blank',rel:'noopener noreferrer'},h('span',{className:'follow-icon','aria-hidden':true},'f'),h('span',null,h('span',{className:'follow-label'},'Facebook'),h('span',{className:'follow-handle'},'Pico Dhaka')),h('span',{className:'follow-arrow','aria-hidden':true},'↗'))))));
       }
       ReactDOM.createRoot(document.getElementById('root')).render(h(App));
     })();
