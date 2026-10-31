@@ -56,7 +56,8 @@
     @keyframes wind-cross{0%{transform:translateX(calc(100vw + 90px)) translateY(0)}24%{transform:translateX(calc(75vw + 40px)) translateY(-5px)}50%{transform:translateX(50vw) translateY(0)}75%{transform:translateX(24vw) translateY(-4px)}100%{transform:translateX(-120px) translateY(0)}}
     @keyframes tumble-roll{to{transform:rotate(-360deg)}}
     @media(max-width:650px){.horse-runner{bottom:9px;animation-duration:15s}.desert-horse{height:80px}}
-    @media(max-width:650px){.wind-runner{width:28px;height:28px;bottom:9px;animation-duration:8s;animation-delay:-2s}}
+    @keyframes wind-cross-mobile{from{transform:translate3d(calc(100vw + 36px),0,0)}to{transform:translate3d(-46px,-3px,0)}}
+    @media(max-width:650px){.wind-runner{width:32px;height:32px;bottom:9px;animation:wind-cross-mobile 5.5s linear infinite;opacity:1}.wind-runner img{animation-duration:.6s}}
     @media(prefers-reduced-motion:reduce){.horse-runner{animation:none;transform:translateX(20vw)}.desert-horse{animation:none}.wind-runner{display:none}}
     .desert-plant{bottom:14px}.desert-grass{bottom:16px}
     .ticker-unit{display:flex;align-items:center;justify-content:space-around}
