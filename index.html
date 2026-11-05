@@ -104,48 +104,35 @@
     (() => {
       if (!window.React || !window.ReactDOM) return; // Keep the readable HTML if the CDN is unavailable.
       const h=React.createElement;
-      function DeliveryMap({zones,selectedZone,onSelect}){
+      function DeliveryMap({zones,selectedZone}){
         const mapNode=React.useRef(null);
         const mapInstance=React.useRef(null);
-        const markers=React.useRef({});
-        const lastZone=React.useRef(selectedZone);
+        const markerRef=React.useRef(null);
         const [ready,setReady]=React.useState(false);
         React.useEffect(()=>{
           if(!window.L||!mapNode.current)return;
           const map=L.map(mapNode.current,{scrollWheelZoom:false,zoomControl:true});
           L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
-          zones.forEach(z=>{
-            const marker=L.marker([z.lat,z.lng],{icon:L.divIcon({className:'pico-map-pin',html:'<span class="pico-pin-shape"></span>',iconSize:[28,38],iconAnchor:[14,36]})}).addTo(map);
-            marker.bindTooltip(z.name,{permanent:true,direction:z.name==='Banani'?'left':z.name==='Gulshan'?'right':'top',offset:[0,-9],className:'pico-map-tooltip'});
-            marker.on('click',()=>onSelect(z.name));
-            markers.current[z.name]=marker;
-          });
           map.fitBounds(zones.map(z=>[z.lat,z.lng]),{padding:[45,45],maxZoom:12});
           mapInstance.current=map;
           const resize=setTimeout(()=>map.invalidateSize(),220);
           setReady(true);
-          return()=>{clearTimeout(resize);map.remove();mapInstance.current=null;markers.current={}};
+          return()=>{clearTimeout(resize);map.remove();mapInstance.current=null;markerRef.current=null};
         },[]);
         React.useEffect(()=>{
-          Object.entries(markers.current).forEach(([name,marker])=>{
-            const active=name===selectedZone;
-            const pin=marker.getElement();
-            if(pin)pin.classList.toggle('active',active);
-            marker.setZIndexOffset(active?1000:0);
-            const el=marker.getTooltip()?.getElement();
-            if(el)el.classList.toggle('active',active);
-          });
-          if(mapInstance.current&&lastZone.current!==selectedZone){
-            const chosen=zones.find(z=>z.name===selectedZone);
-            if(chosen){
-              mapInstance.current.invalidateSize();
-              mapInstance.current.flyTo([chosen.lat,chosen.lng],14,{duration:0.8});
-            }
-          }
-          lastZone.current=selectedZone;
+          const map=mapInstance.current;
+          if(!map)return;
+          if(markerRef.current){markerRef.current.remove();markerRef.current=null}
+          const chosen=zones.find(z=>z.name===selectedZone);
+          if(!chosen)return;
+          const marker=L.marker([chosen.lat,chosen.lng],{icon:L.divIcon({className:'pico-map-pin active',html:'<span class="pico-pin-shape"></span>',iconSize:[28,38],iconAnchor:[14,36]})}).addTo(map);
+          marker.bindTooltip(chosen.name,{permanent:true,direction:'top',offset:[0,-9],className:'pico-map-tooltip active'});
+          markerRef.current=marker;
+          map.invalidateSize();
+          map.flyTo([chosen.lat,chosen.lng],14,{duration:0.8});
         },[selectedZone,ready]);
         return h('div',{className:'zone-map-shell'},
-          h('div',{ref:mapNode,className:'zone-map-live',role:'group','aria-label':'Street map of Dhaka with Pico delivery area markers'}),
+          h('div',{ref:mapNode,className:'zone-map-live',role:'group','aria-label':'Street map of Dhaka showing the selected Pico delivery area'}),
           !ready&&h('a',{className:'zone-map-fallback',href:'https://www.openstreetmap.org/#map=12/23.8235/90.4020',target:'_blank',rel:'noopener noreferrer'},'Open the Dhaka street map ↗'));
       }
       function App(){
@@ -154,7 +141,7 @@
         const [orderMode,setOrderMode]=React.useState(false);
         const [menuOpen,setMenuOpen]=React.useState(false);
         const [zoneOpen,setZoneOpen]=React.useState(false);
-        const [selectedZone,setSelectedZone]=React.useState('Uttara');
+        const [selectedZone,setSelectedZone]=React.useState(null);
         const closeRef=React.useRef(null);
         const menuCloseRef=React.useRef(null);
         const zoneCloseRef=React.useRef(null);
@@ -201,10 +188,10 @@
               h('h2',{id:'zone-title',className:'zone-title'},'Delivery areas'),
               h('p',{className:'zone-intro'},'Explore our Dhaka delivery zones. Message us with your address to confirm availability.'),
               h('div',{className:'zone-chips'},zones.map(z=>h('button',{key:z.name,type:'button',className:'zone-chip'+(selectedZone===z.name?' active':''),'aria-pressed':selectedZone===z.name,onClick:()=>setSelectedZone(z.name)},z.name,' ↗'))),
-              h(DeliveryMap,{zones,selectedZone,onSelect:setSelectedZone}),
-              h('p',{className:'zone-selected'},'Selected: ',h('strong',null,selectedZone),' · Share your exact address with us to check delivery.'),
+              h(DeliveryMap,{zones,selectedZone}),
+              h('p',{className:'zone-selected'},selectedZone?h(React.Fragment,null,'Selected: ',h('strong',null,selectedZone),' · Share your exact address with us to check delivery.'):'Tap a place name to show it on the map.'),
               h('button',{className:'zone-message',type:'button',onClick:()=>{setZoneOpen(false);setOrderMode(true);setFollowOpen(true)}},'Message Pico about delivery ↗'),
-              h('p',{className:'zone-caption'},'Street map © OpenStreetMap contributors · Markers show area centres'))),
+              h('p',{className:'zone-caption'},'Street map © OpenStreetMap contributors · Selected place shown at its approximate centre'))),
           followOpen&&h('div',{className:'follow-backdrop',onMouseDown:e=>{if(e.target===e.currentTarget)setFollowOpen(false)}},
             h('section',{className:'follow-panel',role:'dialog','aria-modal':'true','aria-labelledby':'follow-title'},
               h('button',{className:'follow-close',type:'button',ref:closeRef,onClick:()=>setFollowOpen(false),'aria-label':'Close follow panel'},'×'),
