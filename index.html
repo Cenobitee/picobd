@@ -108,6 +108,7 @@
         const mapNode=React.useRef(null);
         const mapInstance=React.useRef(null);
         const markers=React.useRef({});
+        const lastZone=React.useRef(selectedZone);
         const [ready,setReady]=React.useState(false);
         React.useEffect(()=>{
           if(!window.L||!mapNode.current)return;
@@ -128,10 +129,19 @@
         React.useEffect(()=>{
           Object.entries(markers.current).forEach(([name,marker])=>{
             const active=name===selectedZone;
-            marker.setStyle({radius:active?9:7,color:active?'#ed0088':'#075a38',fillColor:active?'#fff200':'#ed0088'});
+            marker.setStyle({radius:active?13:7,color:active?'#075a38':'#075a38',weight:active?5:3,fillColor:active?'#fff200':'#ed0088'});
+            if(active)marker.bringToFront();
             const el=marker.getTooltip()?.getElement();
             if(el)el.classList.toggle('active',active);
           });
+          if(mapInstance.current&&lastZone.current!==selectedZone){
+            const chosen=zones.find(z=>z.name===selectedZone);
+            if(chosen){
+              mapInstance.current.invalidateSize();
+              mapInstance.current.flyTo([chosen.lat,chosen.lng],14,{duration:0.8});
+            }
+          }
+          lastZone.current=selectedZone;
         },[selectedZone,ready]);
         return h('div',{className:'zone-map-shell'},
           h('div',{ref:mapNode,className:'zone-map-live',role:'group','aria-label':'Street map of Dhaka with Pico delivery area markers'}),
