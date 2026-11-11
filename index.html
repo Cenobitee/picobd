@@ -94,6 +94,35 @@
 
 /* Pico event gallery */
 .event-gallery{position:relative;padding:72px clamp(20px,5vw,84px) 82px;background:#fffbea;color:#075b30;border-top:5px solid #077238;overflow:hidden}.event-gallery:before{content:'';position:absolute;top:0;right:0;width:230px;height:18px;background:#f00086;transform:skewX(-32deg)}.event-inner{max-width:1160px;margin:auto}.event-eyebrow{margin:0 0 10px;font-size:12px;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:#e6007e}.event-heading{margin:0;font-family:Georgia,serif;font-size:clamp(38px,5.8vw,72px);line-height:1;letter-spacing:-.045em}.event-lede{margin:16px 0 30px;max-width:520px;font-size:16px;line-height:1.5}.event-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.event-photo{display:block;position:relative;aspect-ratio:4/5;border:3px solid #075b30;border-radius:15px;padding:0;overflow:hidden;background:#fff200;cursor:pointer;box-shadow:7px 7px 0 #f00086;transition:transform .2s,box-shadow .2s}.event-photo:hover,.event-photo:focus-visible{transform:translateY(-5px);box-shadow:7px 12px 0 #f00086}.event-photo img{width:100%;height:100%;object-fit:cover;display:block}.event-photo span{position:absolute;right:12px;bottom:12px;padding:8px 11px;border-radius:99px;background:#fffbea;color:#075b30;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.photo-backdrop{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:58px 70px 48px;background:rgba(1,38,22,.94)}.photo-dialog{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:min(100%,1050px);height:100%;width:100%}.photo-dialog img{display:block;max-width:100%;max-height:calc(100% - 35px);object-fit:contain;border:3px solid #fff200;border-radius:5px}.photo-caption{margin:12px 0 0;color:#fffbea;text-align:center;font-size:13px;font-weight:700}.photo-close,.photo-arrow{position:absolute;z-index:2;display:grid;place-items:center;width:44px;height:44px;border:2px solid #075b30;border-radius:50%;background:#fff200;color:#075b30;font-size:27px;font-weight:900;cursor:pointer}.photo-close{top:-37px;right:-48px}.photo-arrow{top:50%;transform:translateY(-50%)}.photo-prev{left:-57px}.photo-next{right:-57px}@media(max-width:720px){.event-gallery{padding:50px 20px 62px}.event-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.event-photo{border-width:2px;box-shadow:4px 4px 0 #f00086}.event-photo span{font-size:9px;padding:6px 8px;right:7px;bottom:7px}.photo-backdrop{padding:58px 16px 45px}.photo-dialog img{max-height:calc(100% - 55px)}.photo-close{top:-43px;right:0}.photo-prev{left:0}.photo-next{right:0}.photo-arrow{top:auto;bottom:-36px;transform:none}}@media(max-width:420px){.event-grid{gap:10px}.event-heading{font-size:43px}.event-lede{font-size:14px}}
+
+/* Keep the phone layout readable even when Android requests a desktop site. */
+html.phone-desktop body{width:var(--phone-width);min-width:0;zoom:var(--phone-zoom)}
+html.phone-desktop .topbar{padding:10px 16px;font-size:10px;gap:8px}
+html.phone-desktop .socials{gap:6px}
+html.phone-desktop .socials a{padding:7px 9px;font-size:9px}
+html.phone-desktop .socials a::before{width:15px;height:15px;font-size:10px}
+html.phone-desktop .hero{padding:8px 18px 14px}
+html.phone-desktop .logo-wrap{width:min(78%,280px);margin:0 auto 4px}
+html.phone-desktop .burst.one{font-size:28px;right:3%}
+html.phone-desktop .burst.two{font-size:16px}
+html.phone-desktop .hero h1{font-family:system-ui,Arial,sans-serif;font-size:clamp(48px,13vw,60px);font-weight:1000;line-height:.94;letter-spacing:-.035em;text-shadow:3px 4px 0 var(--green);max-width:100%;opacity:1;transform:none}
+html.phone-desktop .intro{margin:12px auto 14px;font-size:19px}
+html.phone-desktop .hero-actions{gap:10px}
+html.phone-desktop .cta{padding:12px 16px;font-size:11px}
+html.phone-desktop .ticker-wrap{padding-top:100px}
+html.phone-desktop .ticker-scene,html.phone-desktop .desert-unit{height:100px}
+html.phone-desktop .desert-horse{height:80px}
+html.phone-desktop .desert-plant{max-height:78px}
+html.phone-desktop .desert-grass{max-height:42px}
+html.phone-desktop .event-gallery{padding:50px 20px 62px}
+html.phone-desktop .event-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+html.phone-desktop .event-photo{border-width:2px;box-shadow:4px 4px 0 #f00086}
+html.phone-desktop .event-photo span{font-size:9px;padding:6px 8px;right:7px;bottom:7px}
+html.phone-desktop .event-heading{font-size:43px}
+html.phone-desktop .event-lede{font-size:14px}
+html.phone-desktop .footer{font-size:9px}
+html.phone-desktop .footer span:last-child{display:none}
+@media(max-width:650px){.topbar{gap:7px}.hero{padding:8px 16px 16px}.hero h1{font-size:clamp(46px,12.5vw,60px);line-height:.94;letter-spacing:-.035em}.hero-actions{gap:10px}.cta{padding:12px 16px;font-size:11px}.intro{font-size:clamp(18px,5vw,21px);line-height:1.2}.event-gallery{padding-top:44px}}
 </style>
 </head>
 <body>
@@ -223,7 +252,7 @@
                 h('a',{className:'follow-link',href:'https://www.instagram.com/pico.dhaka/',target:'_blank',rel:'noopener noreferrer'},h('span',{className:'follow-icon','aria-hidden':true},'◎'),h('span',null,h('span',{className:'follow-label'},'Instagram'),h('span',{className:'follow-handle'},'@pico.dhaka')),h('span',{className:'follow-arrow','aria-hidden':true},'↗')),
                 h('a',{className:'follow-link',href:'https://www.facebook.com/pico.dhaka/',target:'_blank',rel:'noopener noreferrer'},h('span',{className:'follow-icon','aria-hidden':true},'f'),h('span',null,h('span',{className:'follow-label'},'Facebook'),h('span',{className:'follow-handle'},'Pico Dhaka')),h('span',{className:'follow-arrow','aria-hidden':true},'↗'))))));
       }
-      ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+      function fitPhoneDesktopMode(){const phone=window.matchMedia('(pointer: coarse)').matches&&screen.width<=650&&innerWidth>=700;document.documentElement.classList.toggle('phone-desktop',phone);document.documentElement.style.setProperty('--phone-width',screen.width+'px');document.documentElement.style.setProperty('--phone-zoom',phone?String(innerWidth/screen.width):'1')}fitPhoneDesktopMode();window.addEventListener('resize',fitPhoneDesktopMode); ReactDOM.createRoot(document.getElementById('root')).render(h(App));
     })();
   </script>
 </body>
