@@ -132,6 +132,9 @@ html.phone-desktop .hero{padding:0 12px 7px}html.phone-desktop .logo-wrap{width:
 .horse-runner{left:58%;animation:horse-patrol 26s linear infinite;animation-delay:-7s;will-change:left,transform}
 @keyframes horse-patrol{0%{left:58%;transform:scaleX(1)}49.9%{left:10%;transform:scaleX(1)}50%{left:10%;transform:scaleX(-1)}99.9%{left:58%;transform:scaleX(-1)}100%{left:58%;transform:scaleX(1)}}
 @media(prefers-reduced-motion:reduce){.horse-runner{left:35%;animation:none;transform:none}}
+
+@media(max-width:360px){.topbar>span{display:none}.topbar{justify-content:center}}
+html.narrow-phone .topbar>span{display:none}html.narrow-phone .topbar{justify-content:center}
 </style>
 </head>
 <body>
@@ -261,7 +264,7 @@ html.phone-desktop .hero{padding:0 12px 7px}html.phone-desktop .logo-wrap{width:
                 h('a',{className:'follow-link',href:'https://www.instagram.com/pico.dhaka/',target:'_blank',rel:'noopener noreferrer'},h('span',{className:'follow-icon','aria-hidden':true},'◎'),h('span',null,h('span',{className:'follow-label'},'Instagram'),h('span',{className:'follow-handle'},'@pico.dhaka')),h('span',{className:'follow-arrow','aria-hidden':true},'↗')),
                 h('a',{className:'follow-link',href:'https://www.facebook.com/pico.dhaka/',target:'_blank',rel:'noopener noreferrer'},h('span',{className:'follow-icon','aria-hidden':true},'f'),h('span',null,h('span',{className:'follow-label'},'Facebook'),h('span',{className:'follow-handle'},'Pico Dhaka')),h('span',{className:'follow-arrow','aria-hidden':true},'↗'))))));
       }
-      function fitPhoneDesktopMode(){const phone=window.matchMedia('(pointer: coarse)').matches&&screen.width<=650&&innerWidth>=700;document.documentElement.classList.toggle('phone-desktop',phone);document.documentElement.style.setProperty('--phone-width',screen.width+'px');document.documentElement.style.setProperty('--phone-zoom',phone?String(innerWidth/screen.width):'1')}fitPhoneDesktopMode();window.addEventListener('resize',fitPhoneDesktopMode); ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+      function fitPhoneDesktopMode(){const phone=window.matchMedia('(pointer: coarse)').matches&&screen.width<=650&&innerWidth>=700;document.documentElement.classList.toggle('phone-desktop',phone);document.documentElement.classList.toggle('narrow-phone',screen.width<=360);document.documentElement.style.setProperty('--phone-width',screen.width+'px');document.documentElement.style.setProperty('--phone-zoom',phone?String(innerWidth/screen.width):'1')}fitPhoneDesktopMode();window.addEventListener('resize',fitPhoneDesktopMode); ReactDOM.createRoot(document.getElementById('root')).render(h(App));
     })();
   </script>
 </body>
