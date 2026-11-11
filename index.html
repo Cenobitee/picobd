@@ -135,6 +135,13 @@ html.phone-desktop .hero{padding:0 12px 7px}html.phone-desktop .logo-wrap{width:
 
 @media(max-width:360px){.topbar>span{display:none}.topbar{justify-content:center}}
 html.narrow-phone .topbar>span{display:none}html.narrow-phone .topbar{justify-content:center}
+
+/* Stable phone horse animation: translate within the scene instead of positioning from the viewport. */
+.horse-runner{left:35%;transform:translateX(0);animation:horse-sway 18s ease-in-out infinite;animation-delay:0s;will-change:transform}
+@keyframes horse-sway{0%{transform:translateX(42px) scaleX(1)}49.9%{transform:translateX(-42px) scaleX(1)}50%{transform:translateX(-42px) scaleX(-1)}99.9%{transform:translateX(42px) scaleX(-1)}100%{transform:translateX(42px) scaleX(1)}}
+@media(max-width:650px){.horse-runner{left:35%}}
+html.phone-desktop .horse-runner{left:35%}
+@media(prefers-reduced-motion:reduce){.horse-runner{animation:none;transform:none}}
 </style>
 </head>
 <body>
