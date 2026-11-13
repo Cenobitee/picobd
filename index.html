@@ -159,6 +159,9 @@ html.phone-desktop .horse-runner{left:35%}
 
 /* Chrome on Android can report an oversized small viewport. Keep the phone hero in normal document flow. */
 @media (max-width:650px), (any-pointer:coarse){.first-screen{min-height:0;height:auto}.first-screen .hero{flex:none;justify-content:flex-start;padding-top:clamp(10px,3vh,32px)}.first-screen .ticker-wrap{margin-top:clamp(34px,7vh,86px)}}
+
+/* Join the desert banner cleanly to the event section on phones. */
+@media (max-width:650px), (any-pointer:coarse){.first-screen + .event-gallery{margin-top:0}.event-gallery:before{display:none}}
 </style>
 </head>
 <body>
