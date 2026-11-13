@@ -305,7 +305,7 @@ html{scroll-snap-type:y mandatory;scroll-behavior:smooth;scroll-padding-top:0}
         React.useEffect(()=>{
           if(!window.L||!mapNode.current)return;
           const map=L.map(mapNode.current,{scrollWheelZoom:false,zoomControl:true});
-          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
           zones.forEach(z=>{
             const label=L.tooltip({permanent:true,interactive:true,direction:z.name==='Banani'?'left':z.name==='Gulshan'?'right':'top',offset:z.name==='Banani'?[ -10,0]:z.name==='Gulshan'?[10,0]:[0,-6],className:'pico-zone-label'})
               .setLatLng([z.lat,z.lng]).setContent('<a class="area-map-link" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(z.name+', Dhaka, Bangladesh')+'" target="_blank" rel="noopener noreferrer" aria-label="Open '+z.name+' in Google Maps"><span class="area-map-dot"></span><span class="area-map-name">'+z.name+'</span></a>').addTo(map);
