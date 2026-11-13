@@ -241,6 +241,16 @@ html{scroll-snap-type:y mandatory;scroll-behavior:smooth;scroll-padding-top:0}
 .guide-intro{margin:20px 0 0;line-height:1.5}.guide-label{display:block;font:900 11px Arial,sans-serif;letter-spacing:.08em;color:#e6007e;margin-bottom:12px}
 .policy-grid h3{color:#075b30;text-transform:none;font-size:21px;letter-spacing:0;margin-bottom:10px}.policy-grid p{line-height:1.6}.policy-grid mark{background:#ffe0ee;color:#075b30;font-weight:700;padding:1px 3px}.policy-grid article:nth-child(7){background:#fff5c9;border-color:#bc8a00}
 @media(max-width:650px){.policy-grid{grid-template-columns:1fr;gap:16px}.policy-grid article{padding:20px}}
+
+/* Let the mobile opening section fill one screen, including the ticker. */
+@media(max-width:650px),(any-pointer:coarse){
+.first-screen{min-height:100svh;height:auto;display:flex;flex-direction:column}
+.first-screen .topbar{flex-shrink:0}
+.first-screen .hero{flex:1 0 auto;justify-content:center;padding-top:20px;padding-bottom:24px}
+.first-screen .ticker-wrap{flex-shrink:0;margin-top:0;padding-bottom:0}
+.first-screen .ticker{position:relative;top:auto;left:auto;right:auto}
+.first-screen + .options-page{margin-top:0}
+}
 </style>
 </head>
 <body>
