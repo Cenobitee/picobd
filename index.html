@@ -185,6 +185,9 @@ html.phone-desktop .horse-runner{left:35%}
 
 /* Keep the ticker attached directly to the lifted sand strip. */
 @media (min-width:651px){.first-screen .ticker{top:calc(100% - 48px)}}@media (min-width:651px) and (max-height:900px){.first-screen .ticker{top:calc(100% - 58px)}}
+
+/* Keep desktop sand, ticker and gallery together in document flow. */
+@media (min-width:651px){.first-screen .ticker-wrap{padding-bottom:0;flex-shrink:0}.first-screen .ticker{position:relative;top:auto;left:auto;right:auto}.first-screen + .event-gallery{margin-top:0}}
 </style>
 </head>
 <body>
