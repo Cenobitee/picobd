@@ -224,6 +224,9 @@ html{scroll-snap-type:y mandatory;scroll-behavior:smooth;scroll-padding-top:0}
 .first-screen .hero-actions{gap:20px}
 @media(min-width:651px) and (pointer:fine){.first-screen .logo-wrap{width:min(25svh,275px)}.first-screen .hero h1{font-size:clamp(46px,6.8svh,70px)}}
 @media(max-width:650px){.first-screen .logo-wrap{margin-bottom:14px}.first-screen .kicker{margin-bottom:14px}.first-screen .hero .intro{margin:18px auto 20px;font-size:18px}.first-screen .hero-actions{gap:14px}}
+
+/* Remove the decorative star overlapping the logo. */
+.logo-wrap .burst.one{display:none}
 </style>
 </head>
 <body>
