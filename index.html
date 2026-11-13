@@ -162,6 +162,11 @@ html.phone-desktop .horse-runner{left:35%}
 
 /* Join the desert banner cleanly to the event section on phones. */
 @media (max-width:650px), (any-pointer:coarse){.first-screen + .event-gallery{margin-top:0}.event-gallery:before{display:none}}
+
+/* Let the horse travel forward on touch screens instead of freezing it in place. */
+@media (max-width:650px), (any-pointer:coarse){
+  .horse-runner{left:0;animation:horse-cross 18s linear infinite;animation-delay:-4s;transform:none;will-change:transform}
+}
 </style>
 </head>
 <body>
