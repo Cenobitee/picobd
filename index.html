@@ -265,6 +265,11 @@ html{scroll-snap-type:y mandatory;scroll-behavior:smooth;scroll-padding-top:0}
 
 .pico-zone-label.leaflet-tooltip{padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}.pico-zone-label.leaflet-tooltip:before{display:none}
 .area-map-link{display:flex;align-items:center;flex-direction:column;gap:7px;text-decoration:none;color:#075b30!important}.area-map-dot{width:12px;height:12px;border-radius:50%;background:#f00086;border:2px solid #fff;box-shadow:0 0 0 2px #075b30}.area-map-name{display:block;padding:6px 10px;border:2px solid #075b30;border-radius:4px;background:#fff9e6;box-shadow:3px 3px 0 #075b30;font:900 13px Arial,sans-serif;white-space:nowrap;transition:background .15s,color .15s,transform .15s}.pico-zone-label.active .area-map-name,.area-map-link:hover .area-map-name,.area-map-link:focus-visible .area-map-name{background:#f00086;color:#fff;transform:translateY(-2px)}.area-map-link:focus-visible{outline:3px solid #f00086;outline-offset:5px}
+
+/* More room for the delivery area map. */
+.zone-panel{width:min(94vw,920px)}
+.zone-map-live{height:clamp(360px,49svh,530px)}
+@media(max-width:650px){.zone-panel{width:calc(100vw - 24px)}.zone-map-live{height:clamp(300px,46svh,440px)}}
 </style>
 </head>
 <body>
