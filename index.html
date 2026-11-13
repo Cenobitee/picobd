@@ -285,6 +285,13 @@ html{scroll-snap-type:y mandatory;scroll-behavior:smooth;scroll-padding-top:0}
 
 /* Clear neutral map styling inspired by the supplied reference. */
 .zone-map-live{background:#edf2f3}.zone-map-decor{display:block}.zone-map-shell:after{display:block}.zone-map-live .leaflet-tile{image-rendering:auto}
+
+/* Match the ordering popup to the delivery popup frame. */
+.policies-modal{border:3px solid #075b30;border-radius:18px;background:#fff9eb;box-shadow:8px 8px 0 #f00086}
+.policies-modal:before{content:'';display:block;position:sticky;top:0;z-index:2;height:8px;background:repeating-linear-gradient(90deg,#f00086 0 24px,#fff200 24px 48px,#075b30 48px 72px)}
+.policies-modal .policy-section{border-top:0}
+.policies-modal .policies-close{position:sticky;top:18px;float:right;margin:10px 18px -48px 0;width:34px;height:34px;border:2px solid #075b30;border-radius:50%;background:#fff200;color:#075b30;font-size:23px;line-height:1;z-index:3;cursor:pointer}
+.policies-modal .policies-close:hover{background:#f00086;color:#fff9eb}
 </style>
 </head>
 <body>
