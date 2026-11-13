@@ -201,6 +201,13 @@ html.phone-desktop .horse-runner{left:35%}
 .first-screen .ticker{position:relative;top:auto}
 .first-screen + .event-gallery{margin-top:0}
 }
+
+/* Scroll between the opening page and event page. */
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth;scroll-padding-top:0}
+.first-screen,.event-gallery{scroll-snap-align:start;scroll-snap-stop:always}
+.event-gallery{min-height:100svh}
+.event-gallery:before{display:none}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;scroll-snap-type:y proximity}}
 </style>
 </head>
 <body>
