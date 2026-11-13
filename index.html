@@ -262,6 +262,9 @@ html{scroll-snap-type:y mandatory;scroll-behavior:smooth;scroll-padding-top:0}
 .first-screen > .ticker{position:relative;top:auto;left:auto;right:auto;flex-shrink:0;width:100%}
 
 .bottom-ticker{position:relative;flex-shrink:0;width:100%;margin:0}
+
+.pico-zone-label.leaflet-tooltip{padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}.pico-zone-label.leaflet-tooltip:before{display:none}
+.area-map-link{display:flex;align-items:center;flex-direction:column;gap:7px;text-decoration:none;color:#075b30!important}.area-map-dot{width:12px;height:12px;border-radius:50%;background:#f00086;border:2px solid #fff;box-shadow:0 0 0 2px #075b30}.area-map-name{display:block;padding:6px 10px;border:2px solid #075b30;border-radius:4px;background:#fff9e6;box-shadow:3px 3px 0 #075b30;font:900 13px Arial,sans-serif;white-space:nowrap;transition:background .15s,color .15s,transform .15s}.pico-zone-label.active .area-map-name,.area-map-link:hover .area-map-name,.area-map-link:focus-visible .area-map-name{background:#f00086;color:#fff;transform:translateY(-2px)}.area-map-link:focus-visible{outline:3px solid #f00086;outline-offset:5px}
 </style>
 </head>
 <body>
@@ -288,8 +291,8 @@ html{scroll-snap-type:y mandatory;scroll-behavior:smooth;scroll-padding-top:0}
           L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
           zones.forEach(z=>{
             const label=L.tooltip({permanent:true,interactive:true,direction:z.name==='Banani'?'left':z.name==='Gulshan'?'right':'top',offset:z.name==='Banani'?[ -10,0]:z.name==='Gulshan'?[10,0]:[0,-6],className:'pico-zone-label'})
-              .setLatLng([z.lat,z.lng]).setContent(z.name).addTo(map);
-            label.on('click',()=>onSelect(z.name));
+              .setLatLng([z.lat,z.lng]).setContent('<a class="area-map-link" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(z.name+', Dhaka, Bangladesh')+'" target="_blank" rel="noopener noreferrer" aria-label="Open '+z.name+' in Google Maps"><span class="area-map-dot"></span><span class="area-map-name">'+z.name+'</span></a>').addTo(map);
+            label.on('mouseover',()=>onSelect(z.name));
             labelsRef.current[z.name]=label;
           });
           map.fitBounds(zones.map(z=>[z.lat,z.lng]),{padding:[45,45],maxZoom:12});
@@ -308,10 +311,9 @@ html{scroll-snap-type:y mandatory;scroll-behavior:smooth;scroll-padding-top:0}
           });
           const chosen=zones.find(z=>z.name===selectedZone);
           if(!chosen)return;
-          const marker=L.marker([chosen.lat,chosen.lng],{icon:L.divIcon({className:'pico-map-pin active',html:'<span class="pico-pin-shape"></span>',iconSize:[28,38],iconAnchor:[14,36]})}).addTo(map);
-          markerRef.current=marker;
+          /* The selected label itself marks the area. */
           map.invalidateSize();
-          map.flyTo([chosen.lat,chosen.lng],14,{duration:0.8});
+          /* Keep every area visible while highlighting a label. */
         },[selectedZone,ready]);
         return h('div',{className:'zone-map-shell'},
           h('div',{className:'zone-map-artbar','aria-hidden':'true',dangerouslySetInnerHTML:{__html:"<svg viewBox=\"0 0 560 42\" xmlns=\"http://www.w3.org/2000/svg\" role=\"presentation\"><g stroke=\"#074c32\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M33 34V6c0-5 9-5 9 0v28M33 24c-9 0-13-5-13-15 0-5 7-5 7 0 0 6 2 8 6 8M42 21c8 0 11-4 11-11 0-5-7-5-7 0 0 3-1 5-4 5\" fill=\"#2a8a4b\"/><path d=\"M495 13c8-12 25-8 27 2 3 12-12 20-30 19 11-4 15-9 16-15-4 3-8 5-13 4\" fill=\"#e75526\"/><path d=\"M496 13c-5-5-10-5-13-1 5-1 8 2 9 6M522 14c5-5 10-5 13-2-5 0-8 3-8 6\" fill=\"#2a8a4b\"/></g><g fill=\"#ed0088\"><circle cx=\"216\" cy=\"21\" r=\"4\"/><circle cx=\"209\" cy=\"14\" r=\"4\"/><circle cx=\"223\" cy=\"14\" r=\"4\"/><circle cx=\"209\" cy=\"28\" r=\"4\"/><circle cx=\"223\" cy=\"28\" r=\"4\"/><circle cx=\"344\" cy=\"21\" r=\"4\"/><circle cx=\"337\" cy=\"14\" r=\"4\"/><circle cx=\"351\" cy=\"14\" r=\"4\"/><circle cx=\"337\" cy=\"28\" r=\"4\"/><circle cx=\"351\" cy=\"28\" r=\"4\"/></g><g fill=\"#fff200\" stroke=\"#074c32\" stroke-width=\"1.5\"><circle cx=\"216\" cy=\"21\" r=\"4\"/><circle cx=\"344\" cy=\"21\" r=\"4\"/></g><path d=\"M247 21h22m22 0h22\" stroke=\"#074c32\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M275 15l6 6-6 6m14-12l-6 6 6 6\" fill=\"none\" stroke=\"#ed0088\" stroke-width=\"2\"/></svg>"}}),
@@ -378,9 +380,9 @@ html{scroll-snap-type:y mandatory;scroll-behavior:smooth;scroll-padding-top:0}
               h('p',{className:'zone-eyebrow'},'Pico delivers'),
               h('h2',{id:'zone-title',className:'zone-title'},'Delivery areas'),
               h('p',{className:'zone-intro'},'Explore our Dhaka delivery zones. Message us with your address to confirm availability.'),
-              h('div',{className:'zone-chips'},zones.map(z=>h('button',{key:z.name,type:'button',className:'zone-chip'+(selectedZone===z.name?' active':''),'aria-pressed':selectedZone===z.name,onClick:()=>setSelectedZone(z.name)},z.name,' ↗'))),
+              h('div',{className:'zone-chips'},zones.map(z=>h('button',{key:z.name,type:'button',className:'zone-chip'+(selectedZone===z.name?' active':''),'aria-pressed':selectedZone===z.name,onMouseEnter:()=>setSelectedZone(z.name),onFocus:()=>setSelectedZone(z.name),onClick:()=>window.open('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(z.name+', Dhaka, Bangladesh'),'_blank','noopener,noreferrer')},z.name,' ↗'))),
               h(DeliveryMap,{zones,selectedZone,onSelect:setSelectedZone}),
-              h('p',{className:'zone-selected'},selectedZone?h(React.Fragment,null,'Selected: ',h('strong',null,selectedZone),' · Share your exact address with us to check delivery.'):'Tap a place name to focus it on the map.'),
+              h('p',{className:'zone-selected'},selectedZone?h(React.Fragment,null,'Selected: ',h('strong',null,selectedZone),' · Share your exact address with us to check delivery.'):'Hover over an area to highlight it. Tap its name to open Google Maps.'),
               h('button',{className:'zone-message',type:'button',onClick:()=>{setZoneOpen(false);setOrderMode(true);setFollowOpen(true)}},'Message Pico about delivery ↗'),
               h('p',{className:'zone-caption'},'Street map © OpenStreetMap contributors · Selected place shown at its approximate centre'))),
           followOpen&&h('div',{className:'follow-backdrop',onMouseDown:e=>{if(e.target===e.currentTarget)setFollowOpen(false)}},
