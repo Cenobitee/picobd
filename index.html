@@ -182,6 +182,9 @@ html.phone-desktop .horse-runner{left:35%}
 
 /* Policies popup */
 .policy-open{display:flex;align-items:center;gap:12px;margin:30px auto 34px;padding:14px 22px;border:2px solid var(--green);border-radius:999px;background:#fff9df;color:var(--green);font:900 12px Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:5px 5px 0 var(--pink);transition:.2s}.policy-open span{color:var(--pink);font-size:16px}.policy-open:hover,.policy-open:focus-visible{transform:translateY(-2px);box-shadow:3px 3px 0 var(--green);outline:none}.policy-dialog{width:min(94vw,1220px);max-width:none;max-height:88svh;padding:0;border:0;border-radius:20px;background:#fff9eb;box-shadow:10px 10px 0 #f00086;overflow:auto}.policy-dialog::backdrop{background:rgba(5,43,28,.72);backdrop-filter:blur(4px)}.policy-dialog .policy-section{border:0;margin:0}.policy-dialog-close{position:sticky;top:16px;float:right;z-index:2;margin:16px 18px -50px 0;width:38px;height:38px;border:2px solid var(--green);border-radius:50%;background:#fff9df;color:var(--green);font-size:24px;line-height:1;cursor:pointer}.policy-dialog-close:hover{background:var(--pink);color:#fff;border-color:var(--pink)}@media(max-width:650px){.policy-open{max-width:calc(100% - 40px);justify-content:center;font-size:10px;padding:12px 16px}.policy-dialog{width:92vw;max-height:86svh;border-radius:16px}.policy-dialog .policy-section{padding:42px 18px 28px}.policy-dialog-close{margin:12px 12px -48px 0}}
+
+/* Keep the secondary links in one neat action row. */
+.secondary-actions{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:11px}.secondary-actions .delivery-link{margin:0;min-width:190px}.secondary-actions .delivery-link+ .delivery-link{margin-top:0}@media(max-width:650px){.secondary-actions{gap:8px;width:100%;padding:0 12px}.secondary-actions .delivery-link{min-width:0;flex:1;padding:10px 8px;font-size:9px;letter-spacing:.07em}}
 </style>
 </head>
 <body>
@@ -273,7 +276,7 @@ html.phone-desktop .horse-runner{left:35%}
             h('p',{className:'kicker reveal'},'Build your own burrito'),
             h('h1',{className:'reveal'},h('span',null,'Build your'),h('span',null,'burrito')),
             h('p',{className:'intro reveal'},'Your burrito. Your way.',h('br'), 'Choose your fillings, then message us to order'),
-            h('div',{className:'hero-actions'},h('button',{className:'cta',type:'button',onClick:()=>setMenuOpen(true),'aria-haspopup':'dialog'},'View menu ',h('span',{'aria-hidden':true},'↗')),h('button',{className:'cta cta-secondary',type:'button',onClick:()=>{setOrderMode(true);setFollowOpen(true)},'aria-haspopup':'dialog'},'Order now ',h('span',{'aria-hidden':true},'↗'))),h('button',{className:'delivery-link',type:'button',onClick:()=>setZoneOpen(true),'aria-haspopup':'dialog'},'Check delivery areas ↗'),h('a',{className:'delivery-link',href:'#events'},'See event photos ↗')),
+            h('div',{className:'hero-actions'},h('button',{className:'cta',type:'button',onClick:()=>setMenuOpen(true),'aria-haspopup':'dialog'},'View menu ',h('span',{'aria-hidden':true},'↗')),h('button',{className:'cta cta-secondary',type:'button',onClick:()=>{setOrderMode(true);setFollowOpen(true)},'aria-haspopup':'dialog'},'Order now ',h('span',{'aria-hidden':true},'↗'))),h('div',{className:'secondary-actions'},h('button',{className:'delivery-link',type:'button',onClick:()=>setZoneOpen(true),'aria-haspopup':'dialog'},'Check delivery areas ↗'),h('a',{className:'delivery-link',href:'#events'},'See event photos ↗')),
           h('div',{className:'ticker-wrap'},
             h('div',{className:'ticker-scene','aria-hidden':true},
               h('div',{className:'desert-track'},[0,1,2,3].map(i=>h('div',{className:'desert-unit',key:i},
