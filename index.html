@@ -188,6 +188,19 @@ html.phone-desktop .horse-runner{left:35%}
 
 /* Keep desktop sand, ticker and gallery together in document flow. */
 @media (min-width:651px){.first-screen .ticker-wrap{padding-bottom:0;flex-shrink:0}.first-screen .ticker{position:relative;top:auto;left:auto;right:auto}.first-screen + .event-gallery{margin-top:0}}
+
+/* Reserve the complete desktop desert and ticker within the opening screen. */
+@media(min-width:651px) and (pointer:fine){
+.first-screen{height:100svh;min-height:760px;display:flex;flex-direction:column}
+.first-screen .topbar{flex-shrink:0}
+.first-screen .hero{flex:1;min-height:0;padding:8px 20px 12px}
+.first-screen .logo-wrap{width:min(28svh,310px);margin:0 auto 4px}
+.first-screen .hero h1{font-size:clamp(48px,7.5svh,76px)}
+.first-screen .hero .intro{font-size:clamp(17px,2.3svh,22px);margin:10px auto}
+.first-screen .ticker-wrap{flex:0 0 auto;margin-top:0;padding-top:165px;padding-bottom:0}
+.first-screen .ticker{position:relative;top:auto}
+.first-screen + .event-gallery{margin-top:0}
+}
 </style>
 </head>
 <body>
