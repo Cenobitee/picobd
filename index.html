@@ -251,6 +251,13 @@ html{scroll-snap-type:y mandatory;scroll-behavior:smooth;scroll-padding-top:0}
 .first-screen .ticker{position:relative;top:auto;left:auto;right:auto}
 .first-screen + .options-page{margin-top:0}
 }
+
+/* A lively Follow Pico action in the header. */
+.topbar .top-follow{display:inline-flex;align-items:center;gap:9px;background:#f00086;color:#fff9df;border:2px solid #075b30;box-shadow:4px 4px 0 #075b30;padding:10px 16px;letter-spacing:.09em;transition:transform .18s,box-shadow .18s}
+.topbar .top-follow:before{content:'✿';display:inline-block;color:#fff200;font-size:19px;line-height:1}
+.topbar .top-follow:hover,.topbar .top-follow:focus-visible{background:#d90079;color:#fff9df;transform:translate(-2px,-2px);box-shadow:6px 6px 0 #075b30;outline:2px solid #fff9df;outline-offset:3px}
+.topbar .top-follow:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #075b30}
+@media(max-width:650px){.topbar .top-follow{padding:8px 11px;font-size:9px;gap:6px;box-shadow:3px 3px 0 #075b30}.topbar .top-follow:before{font-size:16px}}
 </style>
 </head>
 <body>
